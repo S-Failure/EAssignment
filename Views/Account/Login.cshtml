@@ -1,0 +1,98 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Local Account Login</h2>
+            <hr />
+
+            @*@if (ViewBag.NotConfirm != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @ViewBag.NotConfirm
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }*@
+
+            @*<h1>@ViewBag.ErrorMessage</h1>*@
+
+            @if (ViewBag.Validate != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h1>@ViewBag.ErrorMessage</h1>
+                    <div asp-validation-summary="All" class="text-danger" style="height:2%"></div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <form asp-controller="Account" asp-action="Login" method="post">
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Email" />
+                    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" placeholder="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i>&nbsp;Login</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-danger"><i class="fa fa-home" aria-hidden="true"></i>Cancel</a>
+                <div>
+                    <a asp-action="ForgotPassword">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>External Account Login</h2>
+            <hr />
+            @{
+                if (Model.ExternalLogins.Count == 0)
+                {
+                    <div>No External logins configured.</div>
+                }
+                else
+                {
+                    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                        <div>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-primary" style="width:auto"
+                                        name="provider" value="@provider.Name"
+                                        title="Login usin your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                </button>
+                            }
+                        </div>
+                    </form>
+                }
+            }
+
+            @*<button type="submit" class="btn btn-danger">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>&nbsp;Google Login
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;Facebook Login
+                </button>
+                <button type="submit" class="btn btn-info">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>&nbsp;Twitter Login
+                </button>*@
+        </div>
+    </div>
+</div>

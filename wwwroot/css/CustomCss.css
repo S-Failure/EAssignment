@@ -1,0 +1,53 @@
+﻿.footerAlign {
+    text-align: center;
+}
+
+a {
+    color: #23961f;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #684596;
+        text-decoration: underline;
+    }
+
+hr {
+    border: 1px #ddd solid;
+}
+
+body .titleerror {
+    padding: 3px;
+}
+
+#applyMigrations {
+    font-size: 14px;
+    background: #23961f;
+    color: #ffffff;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+    #applyMigrations:disabled {
+        background-color: red;
+        border-color: #34dd2e;
+    }
+
+.error {
+    color: red;
+}
+
+.expanded {
+    display: block;
+}
+
+.collapsed {
+    display: none;
+}

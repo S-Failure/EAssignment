@@ -1,0 +1,42 @@
+﻿@model AskForumsViewModel
+
+@{
+    ViewBag.Title = "Enquiry Details";
+}
+
+<form method="post">
+    <div class="row justify-content-center m-3">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Ask your Forum here...</h1>
+                    <input hidden asp-for="UserId" />
+                </div>
+
+                <div class="card-body text-center">
+                    @*<h4>Email : @Model.ClassId</h4>
+                        <h4>Subject : @Model.SubjectId</h4>
+                        <h4>Subject : @Model.DivisionId</h4>*@
+                    <input hidden asp-for="ClassId" />
+                    <input hidden asp-for="SubjectId" />
+                    <input hidden asp-for="DivisionId" />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group col-md-12">
+                        <label asp-for="ForumData" class="col-sm-2 col-form-label"></label>
+                        <textarea asp-for="ForumData" class="form-control" placeholder="Forum ask here"></textarea>
+                        <span asp-validation-for="ForumData" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-controller="UDP" asp-action="Forums"
+                       class="btn btn-primary">Back</a>
+
+                    <button type="submit" class="btn btn-primary">Ask Forum</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

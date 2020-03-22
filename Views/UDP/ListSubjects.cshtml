@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Subject>
+
+@{
+    ViewBag.Title = "All Subject";
+}
+
+<h1>All Subjects</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateSubject"
+       asp-controller="UDP">Add new Subject</a>
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Subject Name</th>
+                <th scope="col">Class Name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model)
+            {
+                <tr>
+                    <td>
+                        @subject.SubjectName
+                    </td>
+                    <th>
+                        @subject.ClassId
+                    </th>
+                    <td>
+                        <a asp-controller="UDP" asp-action="EditSubject" asp-route-id="@subject.EncryptedId" class="btn btn-primary btn-sm"><i class="fa fa-edit">&nbsp;Edit</i></a>
+                    </td>
+                    <td>
+                        <a asp-controller="UDP" asp-action="DeleteSubject" asp-route-id="@subject.EncryptedId" class="btn btn-danger btn-sm"><i class="fa fa-trash">&nbsp;Delete</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Subject created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Subject
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="UDP" asp-action="CreateSubject">
+                Create Subject
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}

@@ -1,0 +1,22 @@
+﻿@model Class
+
+@{
+    ViewBag.Title = "Create New Class";
+}
+
+<h1>Create New Class</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClassName"></label>
+                <input asp-for="ClassName" class="form-control" />
+                <span asp-validation-for="ClassName" class="text-danger"></span>
+            </div>
+            <button style="width:auto" type="submit" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create Class</button>
+            <a asp-controller="UDP" asp-action="ListClasses" class="btn btn-danger"><i class="fa fa-home">&nbsp;Cancel</i></a>
+        </form>
+    </div>
+</div>

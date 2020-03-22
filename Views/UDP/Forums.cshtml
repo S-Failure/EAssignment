@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Forum>
+@inject UserManager<ApplicationUser> userManager;
+
+@{
+    ViewBag.Title = "Forums";
+}
+
+<h1>Forums</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="AskForums"
+       asp-controller="UDP">Ask new Forum</a>
+
+    foreach (var forum in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Forum Id : @forum.ForumId
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@forum.ForumData</h5>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    <a class="btn btn-primary" asp-action="ReplyForums"
+                       asp-controller="UDP" asp-route-id="@forum.EncryptedId">
+                        Reply
+                    </a>
+                    @if (forum.UserId == userManager.GetUserId(User))
+                    {
+                        <a class="btn btn-danger" asp-action="DeleteForums"
+                           asp-controller="UDP" asp-route-id="@forum.EncryptedId">
+                            Delete
+                        </a>
+                    }
+                </form>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Forums asked yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to ask a forum
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="UDP" asp-action="AskForums">
+                Ask Forums
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}

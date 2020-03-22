@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Class>
+
+@{
+    ViewBag.Title = "All Classes";
+}
+
+<h1>All Classes</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateClass"
+       asp-controller="UDP">Add new Class</a>
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Class Name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var classes in Model)
+            {
+                <tr>
+                    <td>
+                        @classes.ClassName
+                    </td>
+                    <td>
+                        <a asp-controller="UDP" asp-action="EditClass" asp-route-id="@classes.EncryptedId" class="btn btn-primary btn-sm"><i class="fa fa-edit">&nbsp;Edit</i></a>
+                    </td>
+                    <td>
+                        <a asp-controller="UDP" asp-action="DeleteClass" asp-route-id="@classes.EncryptedId" class="btn btn-danger btn-sm"><i class="fa fa-trash">&nbsp;Delete</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Classes created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Class
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="UDP" asp-action="CreateClass">
+                Create Class
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}

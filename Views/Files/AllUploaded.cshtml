@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Assignment>
+
+@{
+    ViewBag.Title = "All Uploaded";
+}
+
+<h1>Uploaded Files</h1>
+
+@if (Model.Any())
+{
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">File Name</th>
+                <th scope="col">Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assignment in Model)
+            {
+                <tr>
+                    <td>
+                        @assignment.AssignmentName
+                    </td>
+                    <td>
+                        <form method="post" enctype="multipart/form-data" asp-controller="Files" asp-action="DownloadAssignment" asp-route-id="@assignment.EncryptedId">
+                            <button type="submit" class="btn-primary">
+                                <a class="btn btn-primary btn-sm"><i class="fa fa-download">&nbsp;Download</i></a>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            All File Uploaded
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                No File Uploaded yet.
+            </h5>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}

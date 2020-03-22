@@ -1,0 +1,65 @@
+﻿@if (ViewBag.ErrorTitle == null)
+{
+    <h3>
+        An error occured while processing your request.
+        The support team is notified and we are working on the fix
+    </h3>
+    <h5>Please contact us on codewithprogrammer@gmail.com</h5>
+}
+else
+{
+    <div class="card text-center mt-3">
+        <h3 class="card-header text-danger">@ViewBag.ErrorTitle</h3>
+        <div class="card-body">
+            <h4 class="card-title text-danger">@ViewBag.ErrorMessage</h4>
+            <p class="card-text text-success">Wnant to install database ? Click on following button to Install Database...</p>
+            <p><button id="applyMigrations" onclick="ApplyMigrations()" class="btn btn-primary">Install Database</button></p>
+            <h3><span id="applyMigrationsError" class="error text-danger"></span></h3>
+            <h3><span id="applyMigrationsSuccess" class="text-success"></span></h3>
+            @*<div id="refresh">
+                <a class="btn btn-success" asp-controller="Account" asp-action="RegisterAdmin">Refresh</a>
+            </div>*@
+        </div>
+    </div>
+}
+
+<script>
+    //$(document).ready(function () {
+    //    $("#refresh").hide();
+    //});
+
+    function ApplyMigrations() {
+        applyMigrations.disabled = true;
+        applyMigrationsError.innerHTML = "";
+        applyMigrations.innerHTML = "Installing Database...";
+
+        var req = new XMLHttpRequest();
+
+        req.onload = function (e) {
+            if (req.status === 204) {
+                applyMigrations.innerHTML = "Installation Completed.";
+                applyMigrationsSuccess.innerHTML = "Refresh the page to Registration Admin.";
+                //$(ready).ready(function () {
+                //    $("#refresh").show();
+                //});
+            } else {
+                ErrorApplyingMigrations();
+            }
+        };
+
+        req.onerror = function (e) {
+            ErrorApplyingMigrations();
+        };
+
+        var formBody = "context=EAssignment.Models.AppDbContext,%20EAssignment,%20Version%3D1.0.0.0,%20Culture%3Dneutral,%20PublicKeyToken%3Dnull";
+        req.open("POST", "/ApplyDatabaseMigrations", true);
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        req.send(formBody);
+    }
+
+    function ErrorApplyingMigrations() {
+        applyMigrations.innerHTML = "Apply Migrations";
+        applyMigrationsError.innerHTML = "An error occurred applying migrations, try applying them from the command line";
+        applyMigrations.disabled = false;
+    }
+</script>

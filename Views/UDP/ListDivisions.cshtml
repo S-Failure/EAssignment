@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Division>
+
+@{
+    ViewBag.Title = "All Division";
+}
+
+<h1>All Divisions</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateDivision"
+       asp-controller="UDP">Add new Division</a>
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Division Name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var division in Model)
+            {
+                <tr>
+                    <td>
+                        @division.DivisionName
+                    </td>
+                    <td>
+                        <a asp-controller="UDP" asp-action="EditDivision" asp-route-id="@division.EncryptedId" class="btn btn-primary btn-sm"><i class="fa fa-edit">&nbsp;Edit</i></a>
+                    </td>
+                    <td>
+                        <a asp-controller="UDP" asp-action="DeleteDivision" asp-route-id="@division.EncryptedId" class="btn btn-danger btn-sm"><i class="fa fa-trash">&nbsp;Delete</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Division created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Division
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="UDP" asp-action="CreateDivision">
+                Create Division
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}

@@ -1,0 +1,220 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EAssignment</title>
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/CustomCss.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.css" />
+</head>
+<body>
+    <div class="container-fluid" oncontextmenu="return false;">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <!-- <div class="container"> -->
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">EAssignment</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav">
+
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i>&nbsp;Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="UDP" asp-action="Profile"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                            </li>
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Student"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-file"></i>&nbsp;
+                                        Files
+                                    </a>
+                                    <div class="dropdown-menu customDropdownLink" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-controller="Files"
+                                           asp-action="Submit"><i class="fa fa-upload"></i>&nbsp;Submit</a>
+                                        <a class="dropdown-item" asp-controller="Files"
+                                           asp-action="AllUploaded"><i class="fa fa-download"></i>&nbsp;Download</a>
+                                        <a class="dropdown-item" asp-controller="Files"
+                                           asp-action="Submitted"><i class="fa fa-folder"></i>&nbsp;Submitted</a>
+                                    </div>
+                                </li>
+                            }
+
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Faculty"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-file"></i>&nbsp;
+                                        Files
+                                    </a>
+                                    <div class="dropdown-menu customDropdownLink" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-controller="Files"
+                                           asp-action="Upload"><i class="fa fa-upload"></i>&nbsp;Upload</a>
+                                        <a class="dropdown-item" asp-controller="Files"
+                                           asp-action="AllSubmitted"><i class="fa fa-download"></i>&nbsp;All Submitted</a>
+                                        <a class="dropdown-item" asp-controller="Files"
+                                           asp-action="Uploaded"><i class="fa fa-folder"></i>&nbsp;Uploaded</a>
+                                    </div>
+                                </li>
+                            }
+
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user-secret"></i>&nbsp;
+                                        Manage
+                                    </a>
+                                    <div class="dropdown-menu customDropdownLink" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-controller="Administration"
+                                           asp-action="ListUsers"><i class="fa fa-users"></i>&nbsp;Users</a>
+                                        <a class="dropdown-item" asp-controller="Administration"
+                                           asp-action="ListRoles"><i class="fa fa-diamond"></i>&nbsp;Roles</a>
+                                        <a class="dropdown-item" asp-controller="Home"
+                                           asp-action="AllEnquiry"><i class="fa fa-envelope"></i>&nbsp;Enquiry</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-database"></i>&nbsp;
+                                        Data
+                                    </a>
+                                    <div class="dropdown-menu customDropdownLink" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-controller="UDP"
+                                           asp-action="ListClasses"><i class="fa fa-folder"></i>&nbsp;Classes</a>
+                                        <a class="dropdown-item" asp-controller="UDP"
+                                           asp-action="ListSubjects"><i class="fa fa-folder"></i>&nbsp;Subjects</a>
+                                        <a class="dropdown-item" asp-controller="UDP"
+                                           asp-action="ListDivisions"><i class="fa fa-folder"></i>&nbsp;Divisions</a>
+                                    </div>
+                                </li>
+                            }
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-cogs"></i>&nbsp;
+                                    Setting
+                                </a>
+                                <div class="dropdown-menu customDropdownLink" aria-labelledby="navbarDropdown">
+
+                                    @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Faculty") && User.IsInRole("Student"))
+                                    {*@
+                                    <a class="dropdown-item" asp-controller="Files"
+                                       asp-action="FilesSetting"><i class="fa fa-ellipsis-h"></i>&nbsp;Files Setting</a>
+                                    @*}*@
+
+                                <a class="dropdown-item" asp-controller="Account"
+                                   asp-action="ChangePassword"><i class="fa fa-key"></i>&nbsp;Change Password</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="UDP" asp-action="Forums" class="nav-link"><i class="fa fa-comment"></i>&nbsp;Forums</a>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i>&nbsp;Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="About"><i class="fa fa-info-circle">&nbsp;About</i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Contact"><i class="fa fa-address-book">&nbsp;Contact</i></a>
+                            </li>
+                        }
+
+
+                    </ul>
+                    <ul class=" navbar-nav ml-auto">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-action="Logout" asp-controller="Account">
+                                    <button type="submit" class="nav-link btn btn-link py-0"
+                                            style="width:auto">
+                                        <i class="fa fa-sign-out"></i>&nbsp;
+                                        Logout @User.Identity.Name
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Register" class="nav-link"><i class="fa fa-user-plus"></i>&nbsp;Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Login" class="nav-link"><i class="fa fa-sign-in"></i>&nbsp;Login</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <!-- </div> -->
+            </nav>
+        </header>
+
+        <div class="container">
+            @RenderBody()
+        </div>
+        <div class="footerAlign">
+            <footer class="border-top footer text-muted">
+                &copy; 2020 - Assignment - <a asp-area="" asp-controller="Home" asp-action="Index">Designed By Utkarsh</a>
+            </footer>
+        </div>
+
+    </div>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    @*<script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+        function confirmDelete() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
