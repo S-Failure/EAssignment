@@ -22,20 +22,13 @@
                     <p class="card-text">Reply : @enquiry.Reply</p>
                 }
 
-                @*<img class="card-img-top imageThumbnail" src="@photoPath"
-                    asp-append-version="true" />*@
-
                 <div class="card-footer text-center">
-                    @*<a asp-controller="home" asp-action="ReplyEnquiry"
-                       asp-route-id="@enquiry.EncryptedId"
-                       class="btn btn-primary m-1">Reply</a>*@
                     <a asp-action="ReplyEnquiry" asp-controller="home"
-                        asp-route-id="@enquiry.ID"
+                        asp-route-id="@enquiry.EncryptedId"
                         class="btn btn-primary m-1">Reply</a>
                     <a asp-action="DeleteEnquiry" asp-controller="home"
-                       asp-route-id="@enquiry.ID"
+                       asp-route-id="@enquiry.EncryptedId"
                        class="btn btn-danger m-1">Delete</a>
-                    @*<a href="#" class="btn btn-danger m-1">Delete</a>*@
                 </div>
             </div>
         }

@@ -1,7 +1,12 @@
 ﻿@model ReplyEnquiryViewModel
 
 @{
-    ViewBag.Title = "Enquiry Details";
+    ViewBag.Title = "Enquiry Reply";
+}
+
+@{
+    int ID = Model.ID;
+
 }
 
 <form method="post">
@@ -19,12 +24,14 @@
                     <input hidden asp-for="Email" />
                     <input hidden asp-for="Subject" />
 
+                    <input hidden asp-for="ID" value="@ID"/>
+
                     <div class="form-group col-md-12">
                         <label asp-for="Reply" class="col-sm-2 col-form-label"></label>
                         <textarea asp-for="Reply" class="form-control" placeholder="Reply here"></textarea>
                         <span asp-validation-for="Reply" class="text-danger"></span>
                     </div>
-
+                    <div asp-validation-summary="All" class="text-danger"></div>
 
                 </div>
                 <div class="card-footer text-center">

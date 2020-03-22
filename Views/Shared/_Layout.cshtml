@@ -17,7 +17,6 @@
     <div class="container-fluid" oncontextmenu="return false;">
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <!-- <div class="container"> -->
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">EAssignment</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +53,7 @@
                                 </li>
                             }
 
-                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Faculty"))
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Faculty") || User.IsInRole("Admin"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -114,13 +113,8 @@
                                     Setting
                                 </a>
                                 <div class="dropdown-menu customDropdownLink" aria-labelledby="navbarDropdown">
-
-                                    @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Faculty") && User.IsInRole("Student"))
-                                    {*@
                                     <a class="dropdown-item" asp-controller="Files"
                                        asp-action="FilesSetting"><i class="fa fa-ellipsis-h"></i>&nbsp;Files Setting</a>
-                                    @*}*@
-
                                 <a class="dropdown-item" asp-controller="Account"
                                    asp-action="ChangePassword"><i class="fa fa-key"></i>&nbsp;Change Password</a>
                                 </div>
@@ -169,7 +163,6 @@
                         }
                     </ul>
                 </div>
-                <!-- </div> -->
             </nav>
         </header>
 
@@ -185,8 +178,6 @@
     </div>
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-    @*<script src="~/lib/jquery-validate/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.js"></script>

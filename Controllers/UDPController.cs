@@ -241,9 +241,15 @@ namespace EAssignment.Controllers
         [HttpGet]
         public IActionResult EditClass(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
 
-            Class classes = _cdsRepository.GetClass(decriptedId);
+            Class classes = _cdsRepository.GetClass(decryptedId);
+
+            if (classes == null)
+            {
+                ViewBag.ErrorMessage = $"Class with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
 
             Class newClass = new Class()
             {
@@ -273,9 +279,15 @@ namespace EAssignment.Controllers
         [HttpGet]
         public IActionResult EditDivision(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
 
-            Division division = _cdsRepository.GetDivision(decriptedId);
+            Division division = _cdsRepository.GetDivision(decryptedId);
+
+            if (division == null)
+            {
+                ViewBag.ErrorMessage = $"Division with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
 
             Division newDivision = new Division()
             {
@@ -305,9 +317,15 @@ namespace EAssignment.Controllers
         [HttpGet]
         public IActionResult EditSubject(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
 
-            Subject subject = _cdsRepository.GetSubject(decriptedId);
+            Subject subject = _cdsRepository.GetSubject(decryptedId);
+
+            if (subject == null)
+            {
+                ViewBag.ErrorMessage = $"Subject with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
 
             Subject newSubject = new Subject()
             {
@@ -354,8 +372,15 @@ namespace EAssignment.Controllers
         [HttpPost]
         public IActionResult DeleteClass(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
-            _cdsRepository.DeleteClass(decriptedId);
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
+
+            if (decryptedId == 0)
+            {
+                ViewBag.ErrorMessage = $"Class with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
+
+            _cdsRepository.DeleteClass(decryptedId);
             return RedirectToAction("ListClasses");
         }
 
@@ -368,8 +393,15 @@ namespace EAssignment.Controllers
         [HttpPost]
         public IActionResult DeleteDivision(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
-            _cdsRepository.DeleteDivision(decriptedId);
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
+
+            if (decryptedId == 0)
+            {
+                ViewBag.ErrorMessage = $"Division with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
+
+            _cdsRepository.DeleteDivision(decryptedId);
             return RedirectToAction("ListDivisions");
         }
 
@@ -382,8 +414,15 @@ namespace EAssignment.Controllers
         [HttpPost]
         public IActionResult DeleteSubject(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
-            _cdsRepository.DeleteSubject(decriptedId);
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
+
+            if (decryptedId == 0)
+            {
+                ViewBag.ErrorMessage = $"Subject with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
+
+            _cdsRepository.DeleteSubject(decryptedId);
             return RedirectToAction("ListSubjects");
         }
 
@@ -459,8 +498,14 @@ namespace EAssignment.Controllers
         [HttpGet]
         public IActionResult ReplyForums(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
-            Forum forum = _cdsRepository.GetForum(decriptedId);
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
+            Forum forum = _cdsRepository.GetForum(decryptedId);
+
+            if (forum == null)
+            {
+                ViewBag.ErrorMessage = $"Reply with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
 
             ReplyForumsViewModel newForum = new ReplyForumsViewModel()
             {
@@ -508,8 +553,15 @@ namespace EAssignment.Controllers
         [HttpPost]
         public IActionResult DeleteForums(string id)
         {
-            var decriptedId = Convert.ToInt32(protector.Unprotect(id));
-            _cdsRepository.DeleteForum(decriptedId);
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
+
+            if (decryptedId == 0)
+            {
+                ViewBag.ErrorMessage = $"Forum with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
+
+            _cdsRepository.DeleteForum(decryptedId);
             return RedirectToAction("Forums");
         }
     }

@@ -98,7 +98,7 @@ namespace EAssignment.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Contact(Enquiry model)
+        public IActionResult Contact(EnquiryViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -141,11 +141,17 @@ namespace EAssignment.Controllers
         }
 
         [HttpGet]
-        public IActionResult ReplyEnquiry(int id)
+        public IActionResult ReplyEnquiry(string id)
         {
-            //var enquiryId = Convert.ToInt32(protector.Unprotect(id));
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
 
-            Enquiry enquiry = _enquiryRepository.GetEnquiry(id);
+            Enquiry enquiry = _enquiryRepository.GetEnquiry(decryptedId);
+
+            if (enquiry == null)
+            {
+                ViewBag.ErrorMessage = $"Enquiry with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
 
             ReplyEnquiryViewModel newEnquiry = new ReplyEnquiryViewModel()
             {
@@ -166,6 +172,13 @@ namespace EAssignment.Controllers
             {
                 Enquiry enquiry = _enquiryRepository.GetEnquiry(model.ID);
 
+                if (enquiry == null)
+                {
+                    ViewBag.ErrorMessage = $"Enquiry with Id = {model.ID} cannot be found";
+                    return View("NotFound");
+                }
+
+                enquiry.ID = model.ID;
                 enquiry.Name = model.Name;
                 enquiry.Email = model.Email;
                 enquiry.Subject = model.Subject;
@@ -185,9 +198,17 @@ namespace EAssignment.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteEnquiry(int id)
+        public IActionResult DeleteEnquiry(string id)
         {
-            _enquiryRepository.Delete(id);
+            var decryptedId = Convert.ToInt32(protector.Unprotect(id));
+
+            if (decryptedId == 0)
+            {
+                ViewBag.ErrorMessage = $"Enquiry with Id = {decryptedId} cannot be found";
+                return View("NotFound");
+            }
+
+            _enquiryRepository.Delete(decryptedId);
             return RedirectToAction("AllEnquiry");
         }
 
