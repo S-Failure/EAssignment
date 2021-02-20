@@ -74,18 +74,18 @@ namespace EAssignment
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    options.ClientId = "56491789010-bc05v5hjnfhtsdmfgvheg1uduklvllb4.apps.googleusercontent.com";
-                    options.ClientSecret = "0eyu0GuKQD5sSNg97EpY6yfr";
+                    options.ClientId = "";
+                    options.ClientSecret = "";
                 })
                 .AddFacebook(options =>
                 {
-                    options.AppId = "479558952755386";
-                    options.AppSecret = "4f6c64e97d1127901cba3a71dd7f838e";
+                    options.AppId = "";
+                    options.AppSecret = "";
                 });
                 //.AddGitHub(options =>
                 //{
-                //    options.ClientId = "76cdba454dc9ed0ec725";
-                //    options.ClientSecret = "c4fde5381d1c219a073541c412492090fd53a1ad";
+                //    options.ClientId = "";
+                //    options.ClientSecret = "";
                 //}
                 //);
 
